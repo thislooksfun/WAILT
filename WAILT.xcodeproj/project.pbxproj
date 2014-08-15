@@ -20,8 +20,8 @@
 		F4349535197A1B400040543B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4349533197A1B400040543B /* InfoPlist.strings */; };
 		F4349537197A1B400040543B /* WAILTTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4349536197A1B400040543B /* WAILTTests.m */; };
 		F4349542197A1B9F0040543B /* ScrollingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4349541197A1B9F0040543B /* ScrollingTextView.m */; };
+		F4750581199EA8B700D96D40 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4349521197A1B400040543B /* MainMenu.xib */; };
 		F486F26D197A213B0045EE3B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F486F26C197A213B0045EE3B /* ScriptingBridge.framework */; };
-		F494EF54199980F600E070D6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4349521197A1B400040543B /* MainMenu.xib */; };
 		F494EF5B1999BFDB00E070D6 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = F494EF5A1999BFDB00E070D6 /* MenuController.m */; };
 /* End PBXBuildFile section */
 
@@ -261,11 +261,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4750581199EA8B700D96D40 /* MainMenu.xib in Resources */,
 				F4062C59199ACC96004AD586 /* Settings.xib in Resources */,
 				F4349517197A1B400040543B /* InfoPlist.strings in Resources */,
 				F4349525197A1B400040543B /* Images.xcassets in Resources */,
 				F434951D197A1B400040543B /* Credits.rtf in Resources */,
-				F494EF54199980F600E070D6 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
