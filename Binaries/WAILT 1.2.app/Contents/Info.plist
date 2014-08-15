@@ -8,6 +8,8 @@
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>WAILT</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>thislooksfun.WAILT</string>
 	<key>CFBundleInfoDictionaryVersion</key>

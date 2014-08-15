@@ -100,6 +100,7 @@
     [self controlTextDidChange:nil];
 }
 - (IBAction)cancel:(id)sender {
+    
     [self close];
 }
 - (IBAction)reverseTime:(id)sender {
