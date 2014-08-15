@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <customObject id="ALw-U0-PV6" customClass="MenuController"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+            <connections>
+                <outlet property="scrollingText" destination="Wlx-1v-3em" id="qSG-hp-bi6"/>
+                <outlet property="statusMenu" destination="p5j-sv-4BY" id="oAZ-ZV-clu"/>
+            </connections>
+        </customObject>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <menu id="p5j-sv-4BY">
+            <items>
+                <menuItem title="About" id="1kK-NN-pty">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="about:" target="ALw-U0-PV6" id="1uG-vD-Sbo"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Options" keyEquivalent="," id="rNC-iI-dz0">
+                    <connections>
+                        <action selector="options:" target="ALw-U0-PV6" id="xqV-6a-8Pa"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="ohu-Ea-aG8"/>
+                <menuItem title="Quit" keyEquivalent="q" id="A2f-ew-akN">
+                    <connections>
+                        <action selector="quit:" target="ALw-U0-PV6" id="oKE-Ed-fbo"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <customView id="Wlx-1v-3em" customClass="ScrollingTextView">
+            <rect key="frame" x="0.0" y="0.0" width="163" height="96"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+        </customView>
+    </objects>
+</document>
