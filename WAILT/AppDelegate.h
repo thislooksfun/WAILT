@@ -26,9 +26,11 @@
 @property NSString *seperator;
 @property NSString *timeFormat;
 @property BOOL timeLeft;
+@property BOOL fileWrite;
+@property BOOL fileWriteTime;
 
 - (void) onClick;
 - (void) setSong;
-- (NSString *) getSongWithFormat:(NSString *)form andSeperator:(NSString *)sep andTimeOnLeft:(BOOL)reversed;
+- (NSString *) getSongWithFormat:(NSString *)form andSeperator:(NSString *)sep;
 
 @end

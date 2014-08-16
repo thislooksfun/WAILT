@@ -14,6 +14,8 @@
     IBOutlet NSTextField *seperator;
     IBOutlet NSTextField *preview;
     IBOutlet NSButton *reverseTime;
+    IBOutlet NSButton *writeFile;
+    IBOutlet NSButton *writeTime;
     
     IBOutlet NSTextField *title;
     IBOutlet NSTextField *name;
@@ -28,11 +30,17 @@
     
     bool remaining;
     bool timeOnLeft;
+    bool writeToFile;
+    bool useTimeInFile;
 }
+
+- (void)initializeSettings;
 - (IBAction)save:(id)sender;
 - (IBAction)reset:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)reverseTime:(id)sender;
+- (IBAction)writeToFile:(id)sender;
+- (IBAction)writeTimeToFile:(id)sender;
 - (void)controlTextDidChange:(NSNotification *)notification;
 
 @end

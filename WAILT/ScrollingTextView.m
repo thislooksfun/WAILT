@@ -50,7 +50,7 @@
     if (first) {
         stringWidth = nextWidth;
     }
-        
+    
     if (nextWidth <= 300) {
         if (first) {
             [self setFrameSize:NSSizeFromString([NSString stringWithFormat:@"{%f, 22}", nextWidth])];
@@ -139,10 +139,27 @@
         }
     }
     
+    AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     if (tempText == nil) {
-        formattedText = [self getTime:text andRemaining:remaining];
+        formattedText = [self getTime:text andPos:[delegate timeLeft] andRemaining:remaining];
     } else {
-        formattedTempText = [self getTime:tempText andRemaining:remaining];
+        formattedTempText = [self getTime:tempText andPos:[delegate timeLeft] andRemaining:remaining];
+    }
+    
+    if ([delegate fileWrite]) {
+        if ([delegate fileWriteTime]) {
+            if (tempText == nil) {
+                [self writeToTextFile: [self getTime:text andPos:[delegate timeLeft] andRemaining:remaining]];
+            } else {
+                [self writeToTextFile: [self getTime:tempText andPos:[delegate timeLeft] andRemaining:remaining]];
+            }
+        } else {
+            if (tempText == nil) {
+                [self writeToTextFile: text];
+            } else {
+                [self writeToTextFile: tempText];
+            }
+        }
     }
     
     if (settings) {
@@ -152,7 +169,16 @@
     [self setNeedsDisplay:YES];
 }
 
-- (NSString *) getTime:(NSString *)inp andRemaining:(BOOL) remain {
+- (void) writeToTextFile:(NSString *)str
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *directory = [paths objectAtIndex:0];
+    
+    NSString *fileName = [NSString stringWithFormat:@"%@/WAILT.txt", directory];
+    [str writeToFile:fileName atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+- (NSString *) getTime:(NSString *)inp andPos:(BOOL) onLeft andRemaining:(BOOL) remain {
     if (self.iTunes == nil) {
         self.iTunes = [(AppDelegate *)[[NSApplication sharedApplication] delegate] iTunes];
     }
@@ -209,6 +235,13 @@
     }
     [time appendFormat:(secs < 10 ? @"0%i" : @"%i"), secs];
     
+    if (onLeft) {
+        [str insertString:@"(&time&)#" atIndex:[str rangeOfString:@"]"].location+2];
+    } else {
+        [str insertString:@"#(&time&)" atIndex:[str length]];
+    }
+    
+    [str replaceOccurrencesOfString:@"#" withString:[(AppDelegate *)[[NSApplication sharedApplication] delegate] seperator] options:NSCaseInsensitiveSearch range:NSMakeRange(0, [str length])];
     [str replaceOccurrencesOfString:@"&time&" withString:time options:NSCaseInsensitiveSearch range:NSMakeRange(0, [str length])];
     return str;
 }

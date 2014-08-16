@@ -46,6 +46,6 @@
 - (void) setSettingsController:(SettingsController *) controller;
 - (void) setRemaining:(BOOL) rev;
 - (BOOL) getRemaining;
-- (NSString *) getTime:(NSString *)inp andRemaining:(BOOL) remaining;
+- (NSString *) getTime:(NSString *)inp andPos:(BOOL) onLeft andRemaining:(BOOL) remain;
 
 @end

@@ -26,6 +26,7 @@
     
     [NSApp activateIgnoringOtherApps:YES];
     [settingsController showWindow:nil];
+    [settingsController initializeSettings];
 }
 
 @end
