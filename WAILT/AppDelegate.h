@@ -23,7 +23,7 @@
 @property NSString *defaultSeparator;
 @property NSString *defaultTimeFormat;
 @property NSString *userFormat;
-@property NSString *Separator;
+@property NSString *separator;
 @property NSString *timeFormat;
 @property BOOL timeLeft;
 @property BOOL fileWrite;

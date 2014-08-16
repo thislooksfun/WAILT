@@ -241,7 +241,7 @@
         [str insertString:@"#(&time&)" atIndex:[str length]];
     }
     
-    [str replaceOccurrencesOfString:@"#" withString:[(AppDelegate *)[[NSApplication sharedApplication] delegate] Separator] options:NSCaseInsensitiveSearch range:NSMakeRange(0, [str length])];
+    [str replaceOccurrencesOfString:@"#" withString:[(AppDelegate *)[[NSApplication sharedApplication] delegate] separator] options:NSCaseInsensitiveSearch range:NSMakeRange(0, [str length])];
     [str replaceOccurrencesOfString:@"&time&" withString:time options:NSCaseInsensitiveSearch range:NSMakeRange(0, [str length])];
     return str;
 }

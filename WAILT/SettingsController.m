@@ -27,7 +27,7 @@
 {
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     [format setStringValue:[delegate userFormat]];
-    [Separator setStringValue:[delegate Separator]];
+    [separator setStringValue:[delegate separator]];
     timeOnLeft = [delegate timeLeft];
     [timeLeft setState:timeOnLeft];
     [timeRight setState:!timeOnLeft];
@@ -47,7 +47,7 @@
     [artist setToolTip:@"The current song's artist"];
     [album setToolTip:@"The current song's album"];
     [time setToolTip:@"The song progress"];
-    [sep setToolTip:@"The Separator - as seen below"];
+    [sep setToolTip:@"The separator - as seen below"];
     
     [self controlTextDidChange:nil];
 }
@@ -59,18 +59,16 @@
 
 - (void)controlTextDidChange:(NSNotification *)notification {
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSString *temp = [delegate getSongWithFormat:[format stringValue] andSeparator:[Separator stringValue]];
+    NSString *temp = [delegate getSongWithFormat:[format stringValue] andSeparator:[separator stringValue]];
     [preview setStringValue:[[delegate scrollingText] getTime:temp andPos:timeOnLeft andRemaining:remaining]];
     
     NSString *stream = [[delegate iTunes] currentStreamTitle];
     if (stream != nil && ![stream isEqualToString:@""]) {
         [reverseTime setEnabled:false];
-        [reverseTime setState:false];
         
         [remainLabel setHidden:false];
     } else {
         [reverseTime setEnabled:true];
-        [reverseTime setState:remaining];
         
         [remainLabel setHidden:true];
     }
@@ -81,14 +79,14 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[format stringValue] forKey:@"format"];
-    [defaults setObject:[Separator stringValue] forKey:@"Separator"];
+    [defaults setObject:[separator stringValue] forKey:@"separator"];
     [defaults setBool:timeOnLeft forKey:@"timeOnLeft"];
     [defaults setBool:remaining forKey:@"remaining"];
     [defaults setBool:writeToFile forKey:@"writeToFile"];
     [defaults setBool:useTimeInFile forKey:@"writeTimeToFile"];
     
     delegate.userFormat = [format stringValue];
-    delegate.Separator = [Separator stringValue];
+    delegate.separator = [separator stringValue];
     delegate.timeLeft = timeOnLeft;
     delegate.fileWrite = writeToFile;
     delegate.fileWriteTime = useTimeInFile;
@@ -99,8 +97,23 @@
 }
 - (IBAction)reset:(id)sender {
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
-    [format setStringValue:[delegate defaultFormat]];
-    [Separator setStringValue:[delegate defaultSeparator]];
+    [format    setStringValue:[delegate defaultFormat]];
+    [separator setStringValue:[delegate defaultSeparator]];
+    
+    [reverseTime setState:false];
+    remaining = false;
+    
+    [timeLeft    setState:true];
+    [timeRight   setState:false];
+    timeOnLeft = true;
+    
+    [writeFile   setState:false];
+    writeToFile = false;
+    
+    [writeTime   setState:false];
+    [writeTime   setEnabled:false];
+    useTimeInFile = false;
+    
     [self controlTextDidChange:nil];
 }
 - (IBAction)cancel:(id)sender {
@@ -108,15 +121,12 @@
 }
 - (IBAction)reverseTime:(id)sender {
     remaining = [sender state];
-    [self controlTextDidChange:nil];
 }
 - (IBAction)timePosLeft:(id)sender {
     timeOnLeft = true;
-    [self controlTextDidChange:nil];
 }
 - (IBAction)timePosRight:(id)sender {
     timeOnLeft = false;
-    [self controlTextDidChange:nil];
 }
 - (IBAction)writeToFile:(id)sender {
     writeToFile = [sender state];

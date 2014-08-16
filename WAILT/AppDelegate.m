@@ -19,7 +19,7 @@
 @synthesize defaultSeparator;
 @synthesize defaultTimeFormat;
 @synthesize userFormat;
-@synthesize Separator;
+@synthesize separator;
 @synthesize timeFormat;
 @synthesize timeLeft;
 @synthesize fileWrite;
@@ -44,12 +44,12 @@
 
 - (void) awakeFromNib
 {
-    NSDictionary *appDefaults = @{@"format": defaultFormat, @"Separator": defaultSeparator, @"timeFormat": defaultTimeFormat, @"remaining": @false, @"timeOnLeft": @true, @"writeToFile": @false, @"writeTimeToFile": @false};
+    NSDictionary *appDefaults = @{@"format": defaultFormat, @"separator": defaultSeparator, @"timeFormat": defaultTimeFormat, @"remaining": @false, @"timeOnLeft": @true, @"writeToFile": @false, @"writeTimeToFile": @false};
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults registerDefaults:appDefaults];
     
     userFormat = [defaults stringForKey:@"format"];
-    Separator = [defaults stringForKey:@"Separator"];
+    separator = [defaults stringForKey:@"separator"];
     timeFormat = [defaults stringForKey:@"timeFormat"];
     timeLeft = [defaults boolForKey:@"timeOnLeft"];
     fileWrite = [defaults boolForKey:@"writeToFile"];
@@ -88,7 +88,7 @@
 }
 
 - (void) setSong {
-    NSString *str = [self getSongWithFormat:userFormat andSeparator:Separator];
+    NSString *str = [self getSongWithFormat:userFormat andSeparator:separator];
     
     if (![str isEqualToString:currentData]) {
         [self.scrollingText setText:str];

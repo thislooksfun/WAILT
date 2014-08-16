@@ -14,7 +14,7 @@
                 <outlet property="remainLabel" destination="7iO-id-H24" id="nii-wB-k8B"/>
                 <outlet property="reverseTime" destination="Z5c-WD-Wqe" id="BNS-bk-dI8"/>
                 <outlet property="sep" destination="bte-4O-mBH" id="2gr-Pl-8Cq"/>
-                <outlet property="seperator" destination="5fl-Eg-I4x" id="ubx-h7-utk"/>
+                <outlet property="separator" destination="5fl-Eg-I4x" id="cpD-RH-ioV"/>
                 <outlet property="time" destination="Zny-cJ-EGT" id="ohw-1s-zAx"/>
                 <outlet property="timeLeft" destination="cfw-Hi-y7g" id="6sg-wd-JEh"/>
                 <outlet property="timeRight" destination="zaE-s7-Mio" id="30Q-V9-Cag"/>
