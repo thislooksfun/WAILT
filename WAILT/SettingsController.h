@@ -11,7 +11,7 @@
 @interface SettingsController : NSWindowController {
     @private
     IBOutlet NSTextField *format;
-    IBOutlet NSTextField *seperator;
+    IBOutlet NSTextField *Separator;
     IBOutlet NSTextField *preview;
     IBOutlet NSButton *reverseTime;
     IBOutlet NSButton *writeFile;

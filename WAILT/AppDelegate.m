@@ -16,10 +16,10 @@
 @synthesize currentData;
 
 @synthesize defaultFormat;
-@synthesize defaultSeperator;
+@synthesize defaultSeparator;
 @synthesize defaultTimeFormat;
 @synthesize userFormat;
-@synthesize seperator;
+@synthesize Separator;
 @synthesize timeFormat;
 @synthesize timeLeft;
 @synthesize fileWrite;
@@ -36,7 +36,7 @@
     self.iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
     defaultFormat = @"&title&#&name&#&artist&#&album&";
-    defaultSeperator = @" — ";
+    defaultSeparator = @" — ";
     defaultTimeFormat = @"(hr:min:sec)";
     
     return self;
@@ -44,12 +44,12 @@
 
 - (void) awakeFromNib
 {
-    NSDictionary *appDefaults = @{@"format": defaultFormat, @"seperator": defaultSeperator, @"timeFormat": defaultTimeFormat, @"remaining": @false, @"timeOnLeft": @true, @"writeToFile": @false, @"writeTimeToFile": @false};
+    NSDictionary *appDefaults = @{@"format": defaultFormat, @"Separator": defaultSeparator, @"timeFormat": defaultTimeFormat, @"remaining": @false, @"timeOnLeft": @true, @"writeToFile": @false, @"writeTimeToFile": @false};
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults registerDefaults:appDefaults];
     
     userFormat = [defaults stringForKey:@"format"];
-    seperator = [defaults stringForKey:@"seperator"];
+    Separator = [defaults stringForKey:@"Separator"];
     timeFormat = [defaults stringForKey:@"timeFormat"];
     timeLeft = [defaults boolForKey:@"timeOnLeft"];
     fileWrite = [defaults boolForKey:@"writeToFile"];
@@ -88,7 +88,7 @@
 }
 
 - (void) setSong {
-    NSString *str = [self getSongWithFormat:userFormat andSeperator:seperator];
+    NSString *str = [self getSongWithFormat:userFormat andSeparator:Separator];
     
     if (![str isEqualToString:currentData]) {
         [self.scrollingText setText:str];
@@ -97,7 +97,7 @@
         self.currentData = str;
     }
 }
-- (NSString *) getSongWithFormat:(NSString *)form andSeperator:(NSString *)sep
+- (NSString *) getSongWithFormat:(NSString *)form andSeparator:(NSString *)sep
 {
     iTunesTrack *track = [self.iTunes currentTrack];
     NSMutableString *format = [NSMutableString string];

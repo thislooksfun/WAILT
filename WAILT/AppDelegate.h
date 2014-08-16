@@ -20,10 +20,10 @@
 @property iTunesApplication *iTunes;
 @property NSString *currentData;
 @property NSString *defaultFormat;
-@property NSString *defaultSeperator;
+@property NSString *defaultSeparator;
 @property NSString *defaultTimeFormat;
 @property NSString *userFormat;
-@property NSString *seperator;
+@property NSString *Separator;
 @property NSString *timeFormat;
 @property BOOL timeLeft;
 @property BOOL fileWrite;
@@ -31,6 +31,6 @@
 
 - (void) onClick;
 - (void) setSong;
-- (NSString *) getSongWithFormat:(NSString *)form andSeperator:(NSString *)sep;
+- (NSString *) getSongWithFormat:(NSString *)form andSeparator:(NSString *)sep;
 
 @end

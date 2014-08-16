@@ -27,7 +27,7 @@
 {
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     [format setStringValue:[delegate userFormat]];
-    [seperator setStringValue:[delegate seperator]];
+    [Separator setStringValue:[delegate Separator]];
     timeOnLeft = [delegate timeLeft];
     [timeLeft setState:timeOnLeft];
     [timeRight setState:!timeOnLeft];
@@ -47,7 +47,7 @@
     [artist setToolTip:@"The current song's artist"];
     [album setToolTip:@"The current song's album"];
     [time setToolTip:@"The song progress"];
-    [sep setToolTip:@"The seperator - as seen below"];
+    [sep setToolTip:@"The Separator - as seen below"];
     
     [self controlTextDidChange:nil];
 }
@@ -59,7 +59,7 @@
 
 - (void)controlTextDidChange:(NSNotification *)notification {
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSString *temp = [delegate getSongWithFormat:[format stringValue] andSeperator:[seperator stringValue]];
+    NSString *temp = [delegate getSongWithFormat:[format stringValue] andSeparator:[Separator stringValue]];
     [preview setStringValue:[[delegate scrollingText] getTime:temp andPos:timeOnLeft andRemaining:remaining]];
     
     NSString *stream = [[delegate iTunes] currentStreamTitle];
@@ -81,14 +81,14 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[format stringValue] forKey:@"format"];
-    [defaults setObject:[seperator stringValue] forKey:@"seperator"];
+    [defaults setObject:[Separator stringValue] forKey:@"Separator"];
     [defaults setBool:timeOnLeft forKey:@"timeOnLeft"];
     [defaults setBool:remaining forKey:@"remaining"];
     [defaults setBool:writeToFile forKey:@"writeToFile"];
     [defaults setBool:useTimeInFile forKey:@"writeTimeToFile"];
     
     delegate.userFormat = [format stringValue];
-    delegate.seperator = [seperator stringValue];
+    delegate.Separator = [Separator stringValue];
     delegate.timeLeft = timeOnLeft;
     delegate.fileWrite = writeToFile;
     delegate.fileWriteTime = useTimeInFile;
@@ -100,7 +100,7 @@
 - (IBAction)reset:(id)sender {
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
     [format setStringValue:[delegate defaultFormat]];
-    [seperator setStringValue:[delegate defaultSeperator]];
+    [Separator setStringValue:[delegate defaultSeparator]];
     [self controlTextDidChange:nil];
 }
 - (IBAction)cancel:(id)sender {
