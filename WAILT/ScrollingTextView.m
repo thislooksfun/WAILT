@@ -10,9 +10,6 @@
 @synthesize speed;
 @synthesize text;
 @synthesize formattedText;
-@synthesize tempText;
-@synthesize formattedTempText;
-@synthesize nextText;
 @synthesize delay;
 @synthesize fontDictBlack;
 @synthesize fontDictWhite;
@@ -37,42 +34,25 @@
         fontDict = fontDictBlack;
     }
     
-    BOOL first = (text == nil);
-    if (first) {
-        text = [newText copy];
-        point = NSZeroPoint;
+    text = [newText copy];
+    point = NSZeroPoint;
+    
+    stringWidth = [newText sizeWithAttributes:fontDict].width;
+    
+    if (stringWidth <= 300) {
+        [self setFrameSize:NSSizeFromString([NSString stringWithFormat:@"{%f, 22}", stringWidth])];
     } else {
-        nextText = [newText copy];
+        [self setFrameSize:NSSizeFromString(@"{300, 22}")];
     }
     
-    nextWidth = [newText sizeWithAttributes:fontDict].width;
-    
-    if (first) {
-        stringWidth = nextWidth;
-    }
-    
-    if (nextWidth <= 300) {
-        if (first) {
-            [self setFrameSize:NSSizeFromString([NSString stringWithFormat:@"{%f, 22}", nextWidth])];
-        }
-        nextSize = nextWidth;
-    } else {
-        if (first) {
-            [self setFrameSize:NSSizeFromString(@"{300, 22}")];
-        }
-        nextSize = 300;
-    }
-    
-    if (text != nil && speed > 0 && (text != nil || nextText != nil)) {
+    if (text != nil && speed > 0 && text != nil) {
         [scroller invalidate];
         scroller = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(timerInc:) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:scroller forMode:NSRunLoopCommonModes];
     }
     
-    if (first) {
-        draw = false;
-        delay = 200;
-    }
+    draw = false;
+    delay = 200;
 }
 
 - (void) setSpeed:(NSTimeInterval)newSpeed {
@@ -118,47 +98,16 @@
     settings = controller;
 }
 
-- (void) timerInc:(NSTimer *)timer {
-    CGFloat size = self.frame.size.width;
-    
-    if (nextSize > 299) {
-        nextSize = 300;
-    }
-    
-    if (size+2 < nextSize) {
-        [self setFrameSize:NSSizeFromString([NSString stringWithFormat:@"{%f, 22}", size + 2])];
-        isBigger = (nextSize == 300);
-    } else if (size-2 > nextSize) {
-        if (shouldShrink) {
-            [self setFrameSize:NSSizeFromString([NSString stringWithFormat:@"{%f, 22}", size - 2])];
-            if (tempText != nil) {
-                text = tempText;
-                tempText = nil;
-            }
-            isBigger = false;
-        }
-    }
-    
+- (void) timerInc:(NSTimer *)timer
+{
     AppDelegate *delegate = (AppDelegate *)[[NSApplication sharedApplication] delegate];
-    if (tempText == nil) {
-        formattedText = [self getTime:text andPos:[delegate timeLeft] andRemaining:remaining];
-    } else {
-        formattedTempText = [self getTime:tempText andPos:[delegate timeLeft] andRemaining:remaining];
-    }
+    formattedText = [self getTime:text andPos:[delegate timeLeft] andRemaining:remaining];
     
     if ([delegate fileWrite]) {
         if ([delegate fileWriteTime]) {
-            if (tempText == nil) {
-                [self writeToTextFile: [self getTime:text andPos:[delegate timeLeft] andRemaining:remaining]];
-            } else {
-                [self writeToTextFile: [self getTime:tempText andPos:[delegate timeLeft] andRemaining:remaining]];
-            }
+            [self writeToTextFile: [self getTime:text andPos:[delegate timeLeft] andRemaining:remaining]];
         } else {
-            if (tempText == nil) {
-                [self writeToTextFile: text];
-            } else {
-                [self writeToTextFile: tempText];
-            }
+            [self writeToTextFile: text];
         }
     }
     
@@ -248,12 +197,6 @@
 
 - (void) drawRect:(NSRect)dirtyRect
 {
-    if ([tempText isEqualToString:@"No song playing"] || [nextText isEqualToString:@"No song playing"]) {
-        tempText = nil;
-        nextText = nil;
-        text = @"No song playing";
-    }
-    
     if (isMenuShowing) {
         [[NSColor selectedMenuItemColor] set];
         NSRectFill(dirtyRect);
@@ -264,23 +207,14 @@
     
     if (isBigger) {
         if (draw) {
-            if (!shouldShrink) {
-                point.x = point.x - 1.0f;
-            }
+            point.x = point.x - 1.0f;
             
             CGFloat pointX = dirtyRect.size.width + (-1*(dirtyRect.size.width - stringWidth)) + 30;
             
             if (point.x < -1*pointX) {
                 point.x += pointX;
-                if (tempText != nil) {
-                    text = tempText;
-                    tempText = nil;
-                    stringWidth = nextWidth;
-                }
-                if (tempText == nil) {
-                    draw = false;
-                    delay = 200;
-                }
+                draw = false;
+                delay = 200;
             }
             
             [formattedText drawAtPoint:point withAttributes:fontDict];
@@ -288,45 +222,9 @@
             if (point.x + pointX < dirtyRect.size.width) {
                 NSPoint otherPoint = point;
                 otherPoint.x += pointX;
-                if (tempText != nil) {
-                    if (nextSize < dirtyRect.size.width && otherPoint.x >= -1 && otherPoint.x <= 1) {
-                        shouldShrink = true;
-                    }
-                    [formattedTempText drawAtPoint:otherPoint withAttributes:fontDict];
-                } else {
-                    [formattedText drawAtPoint:otherPoint withAttributes:fontDict];
-                    if (nextText != nil) {
-                        if (speed < 0.015) {
-                            [self setSpeed:speed+0.001];
-                        } else if (speed > 0.015) {
-                            [self setSpeed:speed-0.001];
-                        }
-                    }
-                }
-            } else if (nextText != nil) {
-                tempText = nextText;
-                nextText = nil;
-            } else if (tempText != nil) {
-                if (speed < 0.015) {
-                    [self setSpeed:speed+0.001];
-                } else if (speed > 0.015) {
-                    [self setSpeed:speed-0.001];
-                }
+                [formattedText drawAtPoint:otherPoint withAttributes:fontDict];
             }
         } else {
-            if (nextText == nil && speed != 0.03) {
-                [self setSpeed:0.03];
-            }
-            if (nextText != nil) {
-                tempText = nextText;
-                nextText = nil;
-                [self setSpeed:0.015];
-            }
-            if (tempText != nil) {
-                draw = true;
-                delay = 0;
-            }
-            
             point.x = 0;
             [formattedText drawAtPoint:point withAttributes:fontDict];
             
@@ -338,18 +236,6 @@
         }
     } else {
         point.x = 0;
-        
-        if (nextText == nil && speed != 0.03) {
-            [self setSpeed:0.03];
-        }
-        if (nextText != nil) {
-            tempText = nextText;
-            nextText = nil;
-            isBigger = true;
-            nextSize = 300;
-            
-            [self setSpeed:0.015];
-        }
         
         [formattedText drawAtPoint:point withAttributes:fontDict];
     }

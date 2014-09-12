@@ -10,21 +10,15 @@
     NSTimer *scroller;
     NSPoint point;
     NSString *text;
-    NSString *tempText;
-    NSString *nextText;
     CGFloat stringWidth;
     NSInteger delay;
     NSDictionary *fontDictBlack;
     NSDictionary *fontDictWhite;
     NSDictionary *fontDict;
     NSFont *font;
-    CGFloat nextWidth;
-    CGFloat nextSize;
     BOOL isBigger;
-    BOOL nextIsBigger;
     BOOL draw;
     BOOL isMenuShowing;
-    BOOL shouldShrink;
     BOOL remaining;
     SettingsController *settings;
 }
@@ -33,9 +27,6 @@
 @property (nonatomic) NSTimeInterval speed;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, copy) NSString *formattedText;
-@property (nonatomic, copy) NSString *tempText;
-@property (nonatomic, copy) NSString *formattedTempText;
-@property (nonatomic, copy) NSString *nextText;
 @property (nonatomic) NSInteger delay;
 @property (nonatomic) NSDictionary *fontDictBlack;
 @property (nonatomic) NSDictionary *fontDictWhite;
