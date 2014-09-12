@@ -78,7 +78,7 @@
         case iTunesEPlSStopped: {
             currentData = nil;
             [self.scrollingText setText:@"No song playing"];
-            [self.scrollingText setSpeed:0.03];
+            [self.scrollingText setSpeed:0.025];
             [self.statusBar setView:self.scrollingText];
         } break;
         default: {
@@ -92,7 +92,7 @@
     
     if (![str isEqualToString:currentData]) {
         [self.scrollingText setText:str];
-        [self.scrollingText setSpeed:0.03];
+        [self.scrollingText setSpeed:0.025];
         [self.statusBar setView:self.scrollingText];
         self.currentData = str;
     }
