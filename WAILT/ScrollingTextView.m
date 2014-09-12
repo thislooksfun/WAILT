@@ -41,8 +41,10 @@
     
     if (stringWidth <= 300) {
         [self setFrameSize:NSSizeFromString([NSString stringWithFormat:@"{%f, 22}", stringWidth])];
+        isBigger = false;
     } else {
         [self setFrameSize:NSSizeFromString(@"{300, 22}")];
+        isBigger = true;
     }
     
     if (text != nil && speed > 0 && text != nil) {
